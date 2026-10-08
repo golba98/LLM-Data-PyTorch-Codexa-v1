@@ -1,4 +1,5 @@
 """Tokenize cleaned JSONL splits into memory-mappable binary arrays."""
+from llm_data.cli.paths import asset_path, generated_path
 
 import argparse
 from pathlib import Path
@@ -21,7 +22,7 @@ def build_argument_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("data/tokenized"),
+        default=generated_path('data/tokenized'),
     )
     parser.add_argument("--model-vocab-size", type=int, default=8192)
     parser.add_argument("--context-length", type=int, default=256)

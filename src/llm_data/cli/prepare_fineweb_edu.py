@@ -1,4 +1,5 @@
 """Stream, clean, deduplicate, and split FineWeb-Edu Parquet shards."""
+from llm_data.cli.paths import asset_path, generated_path
 
 import argparse
 from datetime import datetime, timezone
@@ -263,7 +264,7 @@ def main() -> None:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("data/processed/fineweb-edu"),
+        default=generated_path('data/processed/fineweb-edu'),
     )
     parser.add_argument("--validation-ratio", type=float, default=0.005)
     parser.add_argument("--seed", type=int, default=42)

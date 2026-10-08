@@ -1,4 +1,5 @@
 """Download pinned FineWeb-Edu sample-10BT Parquet shards."""
+from llm_data.cli.paths import asset_path, generated_path
 
 import argparse
 from datetime import datetime, timezone
@@ -27,7 +28,7 @@ def main() -> None:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("data/raw/fineweb-edu-10bt"),
+        default=generated_path('data/raw/fineweb-edu-10bt'),
     )
     parser.add_argument(
         "--shard-count",
