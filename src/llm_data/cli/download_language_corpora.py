@@ -1,4 +1,5 @@
 """Download pinned Wikipedia and conversational training corpora."""
+from llm_data.cli.paths import asset_path, generated_path
 
 import argparse
 from datetime import datetime, timezone
@@ -66,7 +67,7 @@ def main() -> None:
     parser.add_argument(
         "--output-root",
         type=Path,
-        default=Path("data/raw"),
+        default=generated_path('data/raw'),
     )
     parser.add_argument(
         "--corpus",

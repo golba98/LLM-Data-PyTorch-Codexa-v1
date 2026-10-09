@@ -1,4 +1,5 @@
 """Build a reproducible million-token smoke corpus from the original fixture."""
+from llm_data.cli.paths import asset_path, generated_path
 
 import argparse
 import json
@@ -21,22 +22,22 @@ def build_argument_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--raw-jsonl",
         type=Path,
-        default=Path("data/raw/smoke-million.jsonl"),
+        default=generated_path('data/raw/smoke-million.jsonl'),
     )
     parser.add_argument(
         "--processed-dir",
         type=Path,
-        default=Path("data/processed/smoke-million"),
+        default=generated_path('data/processed/smoke-million'),
     )
     parser.add_argument(
         "--tokenized-dir",
         type=Path,
-        default=Path("data/tokenized/smoke-million"),
+        default=generated_path('data/tokenized/smoke-million'),
     )
     parser.add_argument(
         "--tokenizer",
         type=Path,
-        default=Path("checkpoints/tokenizer-smoke/tokenizer.json"),
+        default=generated_path('checkpoints/tokenizer-smoke/tokenizer.json'),
     )
     parser.add_argument("--documents", type=int, default=10_000)
     parser.add_argument("--validation-ratio", type=float, default=0.05)

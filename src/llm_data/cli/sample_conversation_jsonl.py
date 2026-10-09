@@ -51,5 +51,10 @@ def run(arguments: argparse.Namespace) -> None:
     print(json.dumps({"input": str(arguments.input), "output": str(arguments.output), "records": len(records), "seed": arguments.seed}))
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """Run the installed console command and module entry point."""
     run(build_parser().parse_args())
+
+
+if __name__ == "__main__":
+    main()

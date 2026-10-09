@@ -1,4 +1,5 @@
 """Prepare deterministic cleaned JSONL splits from local text files."""
+from llm_data.cli.paths import asset_path, generated_path
 
 import argparse
 from collections.abc import Sequence
@@ -120,7 +121,7 @@ def build_argument_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("data/processed"),
+        default=generated_path('data/processed'),
         help="Destination directory for prepared outputs.",
     )
     parser.add_argument("--dataset-name", required=True)
