@@ -11,6 +11,7 @@ import re
 import sys
 
 
+from llm_data.data.repair_split import split_repair_records
 from llm_tokenizer.sft import ChatMessage, serialize_conversation
 from llm_tokenizer.tokenizer import load_tokenizer
 
@@ -202,9 +203,7 @@ def main() -> None:
     natural_rows = [row for _score, _identity_value, row in natural[: arguments.max_natural_records]]
     rows = [_row for _row in _anchor_records()] + natural_rows
     rows.sort(key=lambda row: hashlib.sha256(f"{arguments.seed}:{row['conversation_id']}".encode()).hexdigest())
-    validation = [row for row in rows if int(hashlib.sha256(f"{arguments.seed}:validation:{row['conversation_id']}".encode()).hexdigest()[:8], 16) % 5 == 0]
-    validation_ids = {str(row["conversation_id"]) for row in validation}
-    train = [row for row in rows if str(row["conversation_id"]) not in validation_ids]
+    train, validation = split_repair_records(rows, seed=arguments.seed)
     output_dir = arguments.output_dir
     checksums = {
         "train": _write(output_dir / "train.jsonl", train),
@@ -212,6 +211,7 @@ def main() -> None:
     }
     manifest = {
         "format_version": "chat-v1-repair",
+        "split_policy": "root and normalized duplicate conversation components; grouped 80/20 v2",
         "seed": arguments.seed,
         "context_length": arguments.context_length,
         "natural_records": len(natural_rows),
